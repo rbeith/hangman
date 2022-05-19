@@ -1,5 +1,6 @@
-require './lib/game'
 require './lib/player'
-require './lib/computer'
+require './lib/game'
+require 'yaml'
 
-Game.new
+game = Game.new(Player.new)
+game.play_game

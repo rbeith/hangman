@@ -1,0 +1,10 @@
+--- !ruby/object:Game
+player: !ruby/object:Player
+  letter: a
+secret_word: 'soap
+
+  '
+letter_store:
+- a
+guess_string: __a__
+clue_string: _ _ a _ _

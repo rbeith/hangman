@@ -1,13 +1,8 @@
-class Player < Game
-	attr_accessor :guess
-
-  def initialize
-    @guess
-  end
+class Player
+attr_reader :letter
 
 	def guess
 		puts "Enter a letter to guess the word"
-		letter = gets.chomp
+		@letter = gets.chomp
 	end
-
 end

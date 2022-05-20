@@ -1,0 +1,12 @@
+--- !ruby/object:Game
+secret_word: sender
+game_length: 11
+clue_string: _ e _ _ e _
+letter_store:
+- e
+break_loop: true
+countdown: |2-
+
+  You have 11 turns remaining.
+letter: e
+guess_string: _e__e_

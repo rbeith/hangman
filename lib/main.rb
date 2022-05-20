@@ -1,6 +1,7 @@
-require './lib/player'
 require './lib/game'
+require './lib/Save_Game'
 require 'yaml'
 
-game = Game.new(Player.new)
-game.play_game
+include Save_Game
+
+game = load_game

@@ -1,10 +1,14 @@
 --- !ruby/object:Game
-player: !ruby/object:Player
-  letter: a
-secret_word: 'soap
-
-  '
+secret_word: opinion
+game_length: 7
+clue_string: _ _ i n i _ n
 letter_store:
-- a
-guess_string: __a__
-clue_string: _ _ a _ _
+- i
+- i
+- n
+- n
+countdown: |2-
+
+  You have 8 turns remaining.
+letter: n
+guess_string: __ini_n

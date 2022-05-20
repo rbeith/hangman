@@ -5,7 +5,27 @@ class Game
 
 	def introduction
     puts 'Let\'s play a game of Hangman!'
+    puts 'Select difficulty'
+    puts '  1 - Easy'
+    puts '  2 - Medium'
+    puts '  3 - Hard'
+    set_difficulty
 	end
+
+  def set_difficulty
+    selection = gets.chomp
+    case selection
+    when '1'
+      @game_length = @secret_word.length * 2
+    when '2'     
+      @game_length = @secret_word.length * 1.5
+    when '3'
+      @game_length = @secret_word.length * 1
+    else
+      puts 'Please enter 1, 2, or 3 to select the difficulty level'
+      set_difficulty
+    end
+  end
 	
   def select_word
     dictionary = File.open('dictionary.txt')
@@ -18,9 +38,10 @@ class Game
     @secret_word = dictionary_array.sample.chomp
   end
 
-
   def check_letter(letter)
-    @letter_store.push(letter)
+    if !@letter_store.include?(letter)
+      @letter_store.push(letter)
+    end
     if @secret_word.include?(letter)
       @guess_string = @secret_word.tr("^#{@letter_store.join('')}", '_')
       @clue_string = @guess_string.split(//).join(' ')
@@ -36,50 +57,64 @@ class Game
   end
 
   def guess_tracker
-    puts '   . . . . . . . . . '
-		puts "    Your guesses = #{@letter_store.join(' ')}"
-    puts "   . . . . . . . . . "
+    puts "\n"
+    puts '. . . . . . . . . . . . . . . . . . .'
+		puts "Letters guessed: #{@letter_store.join(' ')}"
+    puts ". . . . . . . . . . . . . . . . . . ."
   end
 
-	def start_new_game
+  def player_guess
+		puts "\nEnter a letter to guess the word "
+		puts "or enter \'save\' to save your game to a file"
+    puts "\nGuess:"
+    guess = gets.chomp.downcase
+		if guess.length == 1 && !@letter_store.include?(guess)
+			@letter = guess
+    elsif @letter_store.include?(guess)
+        puts '*****'
+        puts "\nLetter already chosen. Please try again."
+        puts '*****'
+        player_guess
+    elsif guess.downcase == 'save'
+      save
+    end
+	end
+
+  def start_new_game
     select_word
-    @game_length = @secret_word.length * 1.5
     introduction
     make_clue
     @letter_store = []
   end
-
-  def guess(letter)
-		puts "\nEnter a letter to guess the word "
-		puts "or enter \'save\' to save your game to a file"
-		if letter.length == 1 && !@letter_store.include?(letter)
-			@letter = letter
-    elsif @letter_store.include?(letter)
-      until !@letter_store.include?(letter)
-        puts "Letter already chosen. Please try again."
-        letter = gets.chomp
-      end
-		end
-	end
+  
+  def game_over
+    if @break_loop == false
+      puts "\nThe secret word was #{@secret_word}."
+    end
+    if @guess_string == @secret_word
+      @break_loop = true
+      puts "\nYOU WIN!!!"
+    end
+  end
 
   def play_game
+    @break_loop = false
     i = @game_length.round
     while i > 0
       @countdown = "\nYou have #{i} turns remaining."
+      puts '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
       puts @countdown
+      puts "\n"
       puts @clue_string
-      guess = gets.chomp
-			guess(guess)
-			check_letter(@letter)
       guess_tracker
+			player_guess
+			check_letter(@letter)
       @game_length = i - 1
-			self.save(guess)
-			if @guess_string == @secret_word
-        puts "\nYOU WIN!!!"
+			if @break_loop == true
         break
       end
+			game_over
       i -= 1
     end
-		puts "The secret word was #{@secret_word}."
   end
 end

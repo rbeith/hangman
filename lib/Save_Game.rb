@@ -1,10 +1,12 @@
 module Save_Game
-  def save(input)
-		if input.downcase == 'save'
-      puts "\nGame saved."
+  def save
+      @break_loop = true
       puts "\n"
-			File.open("save.yml", 'w') { |file| file.write(self.to_yaml) }
-		end 
+      puts " * * * * * * * *"
+      puts "   Game saved"
+      puts " * * * * * * * *"
+      puts "\n"
+			File.open("save.yml", 'w') { |file| file.write(self.to_yaml) } 
 	end  
 
   def load_game

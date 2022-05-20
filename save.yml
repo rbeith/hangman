@@ -1,14 +1,17 @@
 --- !ruby/object:Game
-secret_word: opinion
-game_length: 7
-clue_string: _ _ i n i _ n
+secret_word: prices
+game_length: 6
+clue_string: _ _ i _ e s
 letter_store:
+- a
+- e
 - i
-- i
-- n
-- n
+- s
+- d
+- t
 countdown: |2-
 
-  You have 8 turns remaining.
-letter: n
-guess_string: __ini_n
+  You have 6 turns remaining.
+letter: t
+guess_string: __i_es
+break_loop: true

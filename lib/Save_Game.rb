@@ -6,7 +6,8 @@ module Save_Game
       puts "   Game saved"
       puts " * * * * * * * *"
       puts "\n"
-			File.open("save.yml", 'w') { |file| file.write(self.to_yaml) } 
+      file_name = Time.new.asctime
+			File.open("saved_games/#{file_name}.yml", 'w') { |file| file.write(self.to_yaml) } 
 	end  
 
   def load_game
@@ -14,11 +15,23 @@ module Save_Game
     puts 'Or press any key to continue.'
     input = gets.chomp
     if input == 'y'
-      game = YAML.load_file('save.yml')
+      choose_file
+      game = YAML.load_file("saved_games/#{@game_to_load}")
       game.play_game
     else game = Game.new
       game.start_new_game
       game.play_game
     end
+  end
+
+  def choose_file
+    saved_games = []
+    game_dir = Dir.open("saved_games")
+    game_dir.each_child { |file| saved_games.push(file) }
+    puts "\nHere is a list of saved games:"
+    saved_games.each_with_index { |file, index| puts "\n#{index + 1}: #{file}" }
+    puts "Enter the number to open the saved game."
+    input = gets.chomp.to_i
+    @game_to_load = saved_games[input - 1]
   end
 end

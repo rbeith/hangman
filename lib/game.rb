@@ -3,6 +3,34 @@ require './lib/Save_Game'
 class Game
   include Save_Game
 
+	def start_new_game
+    select_word
+    introduction
+    make_clue
+    @letter_store = []
+  end
+
+	def play_game
+    @break_loop = false
+    i = @game_length.round
+    while i > 0
+      @countdown = "\nYou have #{i} turns remaining."
+      puts '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+      puts @countdown
+      puts "\n"
+      puts @clue_string
+      guess_tracker
+			player_guess
+			check_letter(@letter)
+      @game_length = i - 1
+			if @break_loop == true
+        break
+      end
+			game_over
+      i -= 1
+    end
+  end
+
 	def introduction
     puts 'Let\'s play a game of Hangman!'
     puts 'Select difficulty'
@@ -79,13 +107,6 @@ class Game
       save
     end
 	end
-
-  def start_new_game
-    select_word
-    introduction
-    make_clue
-    @letter_store = []
-  end
   
   def game_over
     if @break_loop == false
@@ -94,27 +115,6 @@ class Game
     if @guess_string == @secret_word
       @break_loop = true
       puts "\nYOU WIN!!!"
-    end
-  end
-
-  def play_game
-    @break_loop = false
-    i = @game_length.round
-    while i > 0
-      @countdown = "\nYou have #{i} turns remaining."
-      puts '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-      puts @countdown
-      puts "\n"
-      puts @clue_string
-      guess_tracker
-			player_guess
-			check_letter(@letter)
-      @game_length = i - 1
-			if @break_loop == true
-        break
-      end
-			game_over
-      i -= 1
     end
   end
 end

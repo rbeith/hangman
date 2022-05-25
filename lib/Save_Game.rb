@@ -1,22 +1,22 @@
 module Save_Game
   def save
-      @break_loop = true
-      puts "\n"
-      puts " * * * * * * * *"
-      puts "   Game saved"
-      puts " * * * * * * * *"
-      puts "\n"
-      file_name = Time.new.asctime
-			File.open("saved_games/#{file_name}.yml", 'w') { |file| file.write(self.to_yaml) } 
-	end  
+    @break_loop = true
+    puts "\n"
+    puts " * * * * * * * *"
+    puts "   Game saved"
+    puts " * * * * * * * *"
+    puts "\n"
+    file_name = Time.new.asctime
+    File.open("saved_games/#{file_name}.yml", 'w') { |file| file.write(self.to_yaml) }
+  end
 
   def load_game
-    puts "\nTo load the last saved game, enter \'y\'."
+    puts "\nTo see a list of saved games, enter \'y\'."
     puts 'Or press any key to continue.'
     input = gets.chomp
     if input == 'y'
       choose_file
-      game = YAML.load_file("saved_games/#{@game_to_load}")
+      game = YAML.safe_load_file("saved_games/#{@game_to_load}", permitted_classes: [Game])
       game.play_game
     else game = Game.new
       game.start_new_game

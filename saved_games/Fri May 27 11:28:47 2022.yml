@@ -1,0 +1,9 @@
+--- !ruby/object:Game
+secret_word: profiles
+game_length: 16
+clue_string: _ _ _ _ _ _ _ _
+letter_store: []
+countdown: |2-
+
+  You have 16 turns remaining.
+letter: 0

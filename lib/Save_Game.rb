@@ -1,10 +1,9 @@
 module Save_Game
   def save
-    @break_loop = true
     puts "\n"
-    puts " * * * * * * * *"
-    puts "   Game saved"
-    puts " * * * * * * * *"
+    puts "    * * * * * * * *"
+    puts "      Game saved"
+    puts "    * * * * * * * *"
     puts "\n"
     file_name = Time.new.asctime
     File.open("saved_games/#{file_name}.yml", 'w') { |file| file.write(self.to_yaml) }

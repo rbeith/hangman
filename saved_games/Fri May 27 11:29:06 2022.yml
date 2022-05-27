@@ -1,11 +1,10 @@
 --- !ruby/object:Game
-secret_word: brothers
+secret_word: profiles
 game_length: 15
 clue_string: _ _ _ _ _ _ _ _
 letter_store:
 - a
-break_loop: true
 countdown: |2-
 
   You have 15 turns remaining.
-letter: a
+letter: 0
